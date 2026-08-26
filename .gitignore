@@ -1,5 +1,6 @@
 node_modules
 .next
+.agents
 out
 dist
 .env
@@ -8,3 +9,4 @@ dist
 *.log
 .DS_Store
 tsconfig.tsbuildinfo
+supabase/.temp
