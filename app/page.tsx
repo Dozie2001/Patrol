@@ -60,8 +60,8 @@ export default async function Home() {
             <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#security">
               Security
             </a>
-            <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#stack">
-              Stack
+            <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#built-with">
+              Built with
             </a>
           </nav>
           <div className="flex items-center gap-2">
@@ -201,8 +201,19 @@ export default async function Home() {
         </div>
       </section>
 
-      <footer id="stack" className="mx-auto flex max-w-[96rem] flex-col gap-3 px-4 py-10 text-sm text-muted-foreground sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <p>Patrol uses Next.js, Supabase, AssemblyAI Streaming STT, and AssemblyAI LLM Gateway.</p>
+      <footer id="built-with" className="mx-auto flex max-w-[96rem] flex-col gap-4 px-4 py-10 text-sm text-muted-foreground sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+        <div className="inline-flex w-fit items-center gap-3 rounded-md border border-primary/25 bg-primary/8 px-3 py-2 text-foreground">
+          <span className="flex h-8 w-8 items-end justify-center gap-0.5 rounded-md border border-primary/25 bg-background/70 px-1.5 py-1.5" aria-hidden="true">
+            <span className="h-2 w-1 rounded-full bg-primary/50" />
+            <span className="h-4 w-1 rounded-full bg-primary/70" />
+            <span className="h-6 w-1 rounded-full bg-primary" />
+            <span className="h-3 w-1 rounded-full bg-primary/60" />
+          </span>
+          <span>
+            <span className="block text-xs text-muted-foreground">Built with</span>
+            <span className="font-semibold text-foreground">AssemblyAI</span>
+          </span>
+        </div>
         <Link href="/app" className="font-medium text-primary hover:text-foreground">
           Open app
         </Link>
