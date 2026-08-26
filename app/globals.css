@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --background: 198 26% 7%;
+  --foreground: 190 18% 94%;
+  --card: 196 25% 10%;
+  --card-foreground: 190 18% 94%;
+  --primary: 178 78% 62%;
+  --primary-foreground: 198 28% 7%;
+  --secondary: 198 22% 15%;
+  --secondary-foreground: 190 18% 89%;
+  --muted: 199 18% 13%;
+  --muted-foreground: 196 12% 68%;
+  --accent: 146 64% 48%;
+  --accent-foreground: 190 18% 96%;
+  --destructive: 9 76% 61%;
+  --destructive-foreground: 190 18% 96%;
+  --border: 196 18% 23%;
+  --input: 198 16% 18%;
+  --ring: 176 68% 58%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.ops-grid {
+  background:
+    linear-gradient(hsl(var(--foreground) / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--foreground) / 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 50% 42%, black, transparent 76%);
+  opacity: 0.9;
+}
+
+.landing-stars,
+.landing-stars-b,
+.landing-stars-c {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.landing-stars-b {
+  transform: translate(140px, 340px) scale(1.05);
+}
+
+.landing-stars-c {
+  transform: translate(-100px, 180px) scale(0.92);
+}
+
+.landing-stars::before,
+.landing-stars::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 9999px;
+}
+
+.landing-stars::before {
+  box-shadow:
+    100px 70px hsl(var(--foreground) / 0.42),
+    260px 130px hsl(var(--foreground) / 0.28),
+    420px 60px hsl(var(--foreground) / 0.52),
+    700px 90px hsl(var(--foreground) / 0.46),
+    980px 70px hsl(var(--foreground) / 0.58),
+    1260px 80px hsl(var(--foreground) / 0.42),
+    1540px 70px hsl(var(--foreground) / 0.52),
+    200px 360px hsl(var(--foreground) / 0.48),
+    520px 400px hsl(var(--foreground) / 0.35),
+    820px 420px hsl(var(--foreground) / 0.28),
+    1100px 440px hsl(var(--foreground) / 0.34),
+    1440px 580px hsl(var(--foreground) / 0.42),
+    1780px 820px hsl(var(--foreground) / 0.38);
+}
+
+.landing-stars::after {
+  box-shadow:
+    180px 40px hsl(var(--primary) / 0.48),
+    760px 50px hsl(var(--foreground) / 0.45),
+    1340px 40px hsl(var(--foreground) / 0.4),
+    460px 200px hsl(var(--foreground) / 0.42),
+    1020px 230px hsl(var(--primary) / 0.35),
+    1580px 260px hsl(var(--foreground) / 0.44),
+    700px 460px hsl(var(--foreground) / 0.46),
+    1300px 470px hsl(var(--foreground) / 0.4),
+    480px 660px hsl(var(--primary) / 0.3),
+    1120px 680px hsl(var(--foreground) / 0.4);
+}
+
+.landing-marquee {
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.radar-sweep {
+  background:
+    conic-gradient(from 230deg, transparent 0deg, hsl(var(--primary) / 0.02) 72deg, hsl(var(--primary) / 0.34) 88deg, transparent 106deg),
+    radial-gradient(circle, transparent 0 52%, hsl(var(--primary) / 0.18) 52.5% 53%, transparent 53.5% 100%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .soft-pulse {
+    animation: soft-pulse 2s ease-in-out infinite;
+  }
+
+  .landing-stars {
+    animation: callit-twinkle 5s ease-in-out infinite alternate;
+  }
+
+  .landing-orbit {
+    animation: patrol-orbit 56s linear infinite;
+  }
+
+  .landing-ticker {
+    animation: patrol-ticker 34s linear infinite;
+  }
+
+  .radar-sweep {
+    animation: patrol-radar 4.8s linear infinite;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes callit-twinkle {
+  from {
+    opacity: 0.58;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes patrol-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes patrol-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes patrol-radar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
