@@ -10,6 +10,22 @@ The hackathon MVP turns guard voice reports into:
 - supervisor next actions
 - final incident reports
 
+## Live Demo
+
+- App: https://patrol-ai-sage.vercel.app/
+- Recommended judging path: open the app, click `Launch app`, then use `Run demo script` in Guard View.
+
+## Current MVP
+
+- AssemblyAI-powered voice-to-incident extraction
+- Browser microphone capture for patrol reports
+- One-click demo script for reliable walkthroughs
+- Supervisor incident cards with severity, location, summary, and backup state
+- AI follow-up questions from missing details
+- Dispatch checklist and status review flow
+- Supabase-backed persistence with demo fallback
+- Vercel deployment
+
 ## Stack
 
 - Next.js App Router
@@ -72,6 +88,9 @@ No Supabase MCP/tool is currently exposed in this session, so setup is documente
 - `AGENT.md`: shared coding-agent instructions
 - `CLAUDE.md`: Claude-specific instructions
 - `CODEX.md`: Codex-specific instructions
+- `docs/HACKATHON_SUBMISSION.md`: submission copy and judging story
+- `docs/HACKATHON_SUBMISSION.html`: ready-to-open submission artifact
+- `docs/DEMO_VIDEO_SCRIPT.md`: 3-minute video script
 - `docs/DEPLOYMENT.md`: Vercel deployment and launch checklist
 - `docs/MVP.md`: MVP scope
 - `docs/STACK.md`: stack and architecture

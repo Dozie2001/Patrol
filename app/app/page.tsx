@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ClipboardCheck,
+  Clapperboard,
   Radio,
   ShieldCheck,
 } from "lucide-react";
@@ -74,6 +75,29 @@ export default async function AppPage() {
           </Panel>
 
           <Panel
+            title="Demo Runbook"
+            icon={<Clapperboard className="h-5 w-5" aria-hidden="true" />}
+          >
+            <ol className="space-y-3 text-sm text-muted-foreground">
+              <RunbookStep
+                number="1"
+                title="Create an incident"
+                copy="Use the microphone, or click Run demo script for a reliable judging flow."
+              />
+              <RunbookStep
+                number="2"
+                title="Review the extraction"
+                copy="Check severity, location, summary, missing information, and suggested actions."
+              />
+              <RunbookStep
+                number="3"
+                title="Dispatch the response"
+                copy="Tick checklist items and move the card from triage to dispatched or resolved."
+              />
+            </ol>
+          </Panel>
+
+          <Panel
             title="AI Processing"
             icon={<ClipboardCheck className="h-5 w-5" aria-hidden="true" />}
           >
@@ -140,5 +164,27 @@ function Panel({
       </div>
       {children}
     </section>
+  );
+}
+
+function RunbookStep({
+  number,
+  title,
+  copy,
+}: {
+  number: string;
+  title: string;
+  copy: string;
+}) {
+  return (
+    <li className="flex gap-3 rounded-md border border-border/70 bg-background/70 p-3">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-secondary font-mono text-xs text-primary">
+        {number}
+      </span>
+      <span>
+        <span className="block font-medium text-foreground">{title}</span>
+        <span className="mt-1 block leading-6">{copy}</span>
+      </span>
+    </li>
   );
 }

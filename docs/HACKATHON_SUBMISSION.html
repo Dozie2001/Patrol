@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Patrol Hackathon Submission</title>
+    <style>
+      body {
+        margin: 0;
+        background: #071114;
+        color: #eaf5f3;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 20px;
+      }
+
+      h1,
+      h2 {
+        line-height: 1.1;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(2.5rem, 7vw, 4.5rem);
+      }
+
+      h2 {
+        margin-top: 40px;
+        color: #6ee7df;
+      }
+
+      a {
+        color: #6ee7df;
+      }
+
+      .tagline {
+        margin-top: 12px;
+        color: #9fb9b7;
+        font-size: 1.2rem;
+      }
+
+      .card {
+        margin-top: 24px;
+        border: 1px solid rgba(110, 231, 223, 0.22);
+        border-radius: 8px;
+        background: rgba(12, 31, 36, 0.78);
+        padding: 20px;
+      }
+
+      li {
+        margin: 8px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Patrol</h1>
+      <p class="tagline">Voice-first incident command for physical security teams.</p>
+
+      <div class="card">
+        <p><strong>Live app:</strong> <a href="https://patrol-ai-sage.vercel.app/">https://patrol-ai-sage.vercel.app/</a></p>
+        <p><strong>Source:</strong> <a href="https://github.com/Dozie2001/Patrol">https://github.com/Dozie2001/Patrol</a></p>
+      </div>
+
+      <h2>Description</h2>
+      <p>
+        Physical security teams rely on guards, radio traffic, and supervisors during incidents,
+        but the reporting workflow is still slow and manual. A guard may report a forced entry,
+        suspicious person, medical event, or access-control problem over voice, then someone has
+        to translate that messy report into a structured incident record while the situation is still moving.
+      </p>
+      <p>
+        Patrol turns those live voice reports into incident intelligence. A guard can speak naturally
+        from the browser, or use the built-in demo script for a reliable walkthrough. AssemblyAI
+        streams the report, Patrol extracts the incident type, severity, location, backup request,
+        missing information, evidence needs, and suggested dispatch actions, then presents everything
+        as a supervisor review card.
+      </p>
+      <p>
+        The MVP focuses on the operational loop that matters most: capture, extract, review, and
+        dispatch. Supervisors can tick suggested actions, ask the AI-generated follow-up questions,
+        and move an incident through triage, dispatched, resolved, and closed states.
+      </p>
+      <p>
+        Technically, Patrol is a Next.js application deployed on Vercel with Supabase for auth and
+        incident persistence. AssemblyAI Streaming Speech-to-Text powers live transcription, and
+        AssemblyAI LLM Gateway converts unstructured transcript text into structured incident JSON.
+      </p>
+
+      <h2>What Works Now</h2>
+      <ul>
+        <li>Guard View with browser microphone capture and a one-click demo script.</li>
+        <li>AssemblyAI-powered incident extraction.</li>
+        <li>Supabase-backed incident storage and review state.</li>
+        <li>Supervisor View with dispatch checklist and AI follow-up questions.</li>
+        <li>Vercel deployment with a polished landing page.</li>
+      </ul>
+
+      <h2>Suggested Demo Path</h2>
+      <ol>
+        <li>Open the live app and click Launch app.</li>
+        <li>Click Run demo script.</li>
+        <li>Show the created incident card.</li>
+        <li>Tick dispatch checklist items.</li>
+        <li>Move the incident to Dispatch, then Resolve.</li>
+      </ol>
+
+      <h2>Roadmap</h2>
+      <ul>
+        <li>Audio replay and transcript turn timeline.</li>
+        <li>Role-based guard, supervisor, and admin views.</li>
+        <li>SMS or push dispatch integrations.</li>
+        <li>CCTV and access-control system handoff.</li>
+        <li>Multi-site incident analytics.</li>
+      </ul>
+    </main>
+  </body>
+</html>

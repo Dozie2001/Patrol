@@ -37,7 +37,9 @@ export function IncidentCard({ incident }: { incident: Incident }) {
   );
 
   async function updateStatus(nextStatus: Incident["status"]) {
+    const previousStatus = status;
     setPendingStatus(nextStatus);
+    setStatus(nextStatus);
     setError(null);
 
     try {
@@ -52,9 +54,9 @@ export function IncidentCard({ incident }: { incident: Incident }) {
         throw new Error(body?.error ?? "Could not update incident");
       }
 
-      setStatus(nextStatus);
       router.refresh();
     } catch (reviewError) {
+      setStatus(previousStatus);
       setError(reviewError instanceof Error ? reviewError.message : "Could not update incident");
     } finally {
       setPendingStatus(null);
@@ -119,6 +121,7 @@ export function IncidentCard({ incident }: { incident: Incident }) {
                 key={action.status}
                 className="inline-flex min-h-9 items-center justify-center gap-2 rounded-md border border-border/70 bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors duration-150 hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 disabled={pendingStatus !== null || status === action.status}
+                aria-busy={pendingStatus === action.status}
                 onClick={() => updateStatus(action.status)}
                 type="button"
               >
@@ -164,21 +167,27 @@ function ActionChecklist({
     <div>
       <p className="text-sm font-medium">Dispatch checklist</p>
       <ul className="mt-2 space-y-2">
-        {items.map((item) => (
-          <li key={item}>
-            <label className="flex min-h-10 cursor-pointer items-start gap-3 rounded-md border border-border/70 bg-card/70 px-3 py-2 text-sm leading-6 text-muted-foreground transition-colors duration-150 hover:bg-secondary/70">
-              <input
-                checked={checkedActions.includes(item)}
-                className="mt-1 h-4 w-4 accent-primary"
-                onChange={() => onToggle(item)}
-                type="checkbox"
-              />
-              <span className={checkedActions.includes(item) ? "text-foreground line-through decoration-primary/70" : undefined}>
-                {item}
-              </span>
-            </label>
+        {items.length === 0 ? (
+          <li className="rounded-md border border-border/70 bg-card/70 px-3 py-2 text-sm leading-6 text-muted-foreground">
+            No suggested dispatch actions returned.
           </li>
-        ))}
+        ) : (
+          items.map((item) => (
+            <li key={item}>
+              <label className="flex min-h-10 cursor-pointer items-start gap-3 rounded-md border border-border/70 bg-card/70 px-3 py-2 text-sm leading-6 text-muted-foreground transition-colors duration-150 hover:bg-secondary/70">
+                <input
+                  checked={checkedActions.includes(item)}
+                  className="mt-1 h-4 w-4 accent-primary"
+                  onChange={() => onToggle(item)}
+                  type="checkbox"
+                />
+                <span className={checkedActions.includes(item) ? "text-foreground line-through decoration-primary/70" : undefined}>
+                  {item}
+                </span>
+              </label>
+            </li>
+          ))
+        )}
       </ul>
     </div>
   );

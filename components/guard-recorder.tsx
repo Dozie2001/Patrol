@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { AlertCircle, CheckCircle2, Loader2, Mic, Square } from "lucide-react";
+import { AlertCircle, CheckCircle2, Loader2, Mic, Play, Square } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type TurnMessage = {
@@ -209,6 +209,20 @@ export function GuardRecorder() {
 
   return (
     <div className="space-y-4">
+      <div className="rounded-md border border-primary/20 bg-primary/8 p-4">
+        <div className="flex items-start gap-3">
+          <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-background/70 text-primary">
+            <Play className="h-4 w-4" aria-hidden="true" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Fast demo path</p>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Click Run demo script to create a realistic incident without relying on room audio, browser mic permission, or network timing.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="grid gap-2 sm:grid-cols-2">
         <button
           type="button"
@@ -232,8 +246,14 @@ export function GuardRecorder() {
           disabled={isBusy || isListening}
           className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md border bg-card px-4 py-2 text-sm font-medium transition-colors duration-150 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-60"
         >
+          <Play className="h-4 w-4" aria-hidden="true" />
           Run demo script
         </button>
+      </div>
+
+      <div className="rounded-md border border-border/70 bg-card/70 p-4">
+        <p className="font-mono text-xs uppercase text-muted-foreground">Scenario loaded</p>
+        <p className="mt-2 text-sm leading-6 text-foreground">{demoScript}</p>
       </div>
 
       <div className="rounded-md border border-border/70 bg-background p-4">
