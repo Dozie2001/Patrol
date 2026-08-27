@@ -74,6 +74,24 @@ const signalRows = [
   },
 ];
 
+const trustBadges = [
+  {
+    label: "AssemblyAI",
+    caption: "Built with",
+    tone: "primary",
+  },
+  {
+    label: "Human reviewed",
+    caption: "Supervisor control",
+    tone: "default",
+  },
+  {
+    label: "Audit ready",
+    caption: "Traceable reports",
+    tone: "default",
+  },
+];
+
 export default async function Home() {
   const incidents = await listIncidents();
   const criticalCount = incidents.filter(
@@ -102,7 +120,7 @@ export default async function Home() {
               Security
             </a>
             <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#built-with">
-              Built with
+              Trust
             </a>
           </nav>
           <div className="flex items-center gap-2">
@@ -267,7 +285,7 @@ export default async function Home() {
           <div className="grid gap-3">
             <SecurityRow icon={<LockKeyhole />} text="API keys stay server-side; browsers use short-lived AssemblyAI tokens." />
             <SecurityRow icon={<Siren />} text="AI recommendations stay advisory for human supervisor review." />
-            <SecurityRow icon={<ShieldCheck />} text="Supabase stores incidents, transcript turns, reports, and action history." />
+            <SecurityRow icon={<ShieldCheck />} text="Incident history, transcript turns, reports, and action history stay traceable for review." />
           </div>
         </div>
       </section>
@@ -285,9 +303,15 @@ export default async function Home() {
 function LogoRail({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <BrandPill brand="assemblyai" label="AssemblyAI" caption={compact ? "Built with" : "Voice AI"} variant="primary" />
-      <BrandPill brand="vercel" label="Vercel" caption={compact ? "Hosted on" : "Deployment"} />
-      <BrandPill brand="supabase" label="Supabase" caption={compact ? "Secured by" : "Database + auth"} />
+      {trustBadges.map((badge) => (
+        <BrandPill
+          key={badge.label}
+          brand={badge.label === "AssemblyAI" ? "assemblyai" : "trust"}
+          label={badge.label}
+          caption={compact && badge.label === "AssemblyAI" ? "Built with" : badge.caption}
+          variant={badge.tone === "primary" ? "primary" : "default"}
+        />
+      ))}
     </div>
   );
 }
@@ -298,7 +322,7 @@ function BrandPill({
   caption,
   variant = "default",
 }: {
-  brand: "assemblyai" | "vercel" | "supabase";
+  brand: "assemblyai" | "trust";
   label: string;
   caption: string;
   variant?: "default" | "primary";
@@ -318,22 +342,13 @@ function BrandPill({
   );
 }
 
-function BrandMark({ brand }: { brand: "assemblyai" | "vercel" | "supabase" }) {
-  if (brand === "vercel") {
+function BrandMark({ brand }: { brand: "assemblyai" | "trust" }) {
+  if (brand === "trust") {
     return (
       <span className="flex h-8 w-8 items-center justify-center rounded-md border border-current/20 bg-background/70" aria-hidden="true">
-        <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-          <path d="M12 4 22 20H2L12 4Z" />
-        </svg>
-      </span>
-    );
-  }
-
-  if (brand === "supabase") {
-    return (
-      <span className="flex h-8 w-8 items-center justify-center rounded-md border border-current/20 bg-background/70" aria-hidden="true">
-        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
-          <path d="M13.4 2.8 5.6 13.1c-.5.7 0 1.7.9 1.7h5.1l-1 6.1c-.2 1 .9 1.6 1.6.8l7.7-10.4c.5-.7 0-1.7-.9-1.7h-5.1l1-6.1c.2-1-.9-1.6-1.5-.7Z" />
+        <svg className="h-4 w-4 fill-none stroke-current" viewBox="0 0 24 24">
+          <path d="M12 3.8 19 6v5.5c0 4.1-2.8 7.8-7 8.9-4.2-1.1-7-4.8-7-8.9V6l7-2.2Z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+          <path d="m9 12 2 2 4-4" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
         </svg>
       </span>
     );
