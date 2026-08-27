@@ -10,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { PatrolLogo } from "@/components/patrol-logo";
 import { StatusBadge } from "@/components/status-badge";
 import { listIncidents } from "@/lib/incidents";
 
@@ -87,7 +88,7 @@ export default async function Home() {
             href="/"
             className="flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <ShieldCheck className="h-5 w-5 text-primary" aria-hidden="true" />
+            <PatrolLogo size={28} />
             <span className="text-sm font-semibold">Patrol</span>
           </Link>
           <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">

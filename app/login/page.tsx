@@ -1,6 +1,6 @@
-import { ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { AuthForm } from "@/components/auth-form";
+import { PatrolLogo } from "@/components/patrol-logo";
 
 export default function LoginPage() {
   return (
@@ -12,7 +12,7 @@ export default function LoginPage() {
             href="/"
             className="inline-flex items-center gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <ShieldCheck className="h-5 w-5 text-primary" aria-hidden="true" />
+            <PatrolLogo size={28} />
             <span className="text-sm font-semibold">Patrol</span>
           </Link>
           <p className="mt-8 font-mono text-xs uppercase text-primary">
@@ -33,4 +33,3 @@ export default function LoginPage() {
     </main>
   );
 }
-
