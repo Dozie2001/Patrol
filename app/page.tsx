@@ -2,6 +2,7 @@ import {
   ArrowRight,
   CheckCircle2,
   ClipboardList,
+  Cpu,
   LockKeyhole,
   Radio,
   ShieldCheck,
@@ -20,9 +21,24 @@ const capabilities = [
 ];
 
 const timeline = [
-  { time: "00:00", label: "Guard report", value: "Possible forced entry at Loading Bay B" },
-  { time: "00:08", label: "AI extraction", value: "Severity: Critical · Backup requested" },
-  { time: "00:12", label: "Supervisor card", value: "CCTV, evidence, and dispatch actions queued" },
+  {
+    time: "00:00",
+    label: "Guard report",
+    value: "Possible forced entry at Loading Bay B",
+    state: "capturing",
+  },
+  {
+    time: "00:08",
+    label: "AI extraction",
+    value: "Severity: Critical · Backup requested",
+    state: "processing",
+  },
+  {
+    time: "00:12",
+    label: "Supervisor card",
+    value: "CCTV, evidence, and dispatch actions queued",
+    state: "ready",
+  },
 ];
 
 const tickerItems = [
@@ -34,6 +50,27 @@ const tickerItems = [
   "Backup requests",
   "Dispatch actions",
   "Final reports",
+];
+
+const signalRows = [
+  {
+    step: "01",
+    label: "AssemblyAI streaming",
+    value: "Voice report converted into live transcript turns",
+    status: "active",
+  },
+  {
+    step: "02",
+    label: "Incident extraction",
+    value: "Location, threat, severity, people, and requested action pulled out",
+    status: "running",
+  },
+  {
+    step: "03",
+    label: "Supervisor handoff",
+    value: "Dispatch card, missing questions, and audit log prepared",
+    status: "queued",
+  },
 ];
 
 export default async function Home() {
@@ -56,6 +93,9 @@ export default async function Home() {
           <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
             <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#workflow">
               Workflow
+            </a>
+            <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#signals">
+              Signals
             </a>
             <a className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground" href="#security">
               Security
@@ -124,6 +164,9 @@ export default async function Home() {
                 Create account
               </Link>
             </div>
+            <div className="mt-8">
+              <LogoRail />
+            </div>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {capabilities.map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -160,17 +203,7 @@ export default async function Home() {
                 <span className="absolute left-[38%] top-[64%] h-2 w-2 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary)/0.7)]" />
                 <span className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
               </div>
-              <div className="space-y-3">
-                {timeline.map((item) => (
-                  <div key={item.time} className="rounded-md border border-border/70 bg-background/70 p-4 transition-transform duration-150 ease-out motion-safe:hover:-translate-y-0.5">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-mono text-xs text-primary">{item.time}</p>
-                      <p className="text-xs text-muted-foreground">{item.label}</p>
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-foreground">{item.value}</p>
-                  </div>
-                ))}
-              </div>
+              <OpsTerminal />
             </div>
           </div>
         </div>
@@ -182,6 +215,43 @@ export default async function Home() {
           <Feature icon={<Radio />} title="Capture" copy="Guards speak naturally from patrol, gate, lobby, or loading dock workflows." />
           <Feature icon={<Zap />} title="Extract" copy="AssemblyAI turns speech into transcript turns and incident fields for review." />
           <Feature icon={<ClipboardList />} title="Dispatch" copy="Supervisors get severity, missing info, actions, and report-ready records." />
+        </div>
+      </section>
+
+      <section id="signals" className="border-y border-border/60 bg-card/45">
+        <div className="mx-auto grid max-w-[96rem] gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
+          <div>
+            <p className="font-mono text-xs uppercase text-primary">Terminal-grade progress</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-normal">
+              Every radio call becomes a traceable workflow.
+            </h2>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">
+              The MVP should make the AI work visible: transcript state, extracted fields, supervisor review, and final report history.
+            </p>
+          </div>
+          <div className="rounded-md border border-primary/20 bg-background/78 p-4 shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
+            <div className="flex items-center justify-between border-b border-border/60 pb-3">
+              <div className="flex items-center gap-2">
+                <Cpu className="h-4 w-4 text-primary" aria-hidden="true" />
+                <p className="font-mono text-xs uppercase text-muted-foreground">incident_pipeline.run</p>
+              </div>
+              <StatusBadge tone="green">Streaming</StatusBadge>
+            </div>
+            <div className="mt-4 space-y-3">
+              {signalRows.map((row) => (
+                <div key={row.step} className="grid gap-3 rounded-md border border-border/70 bg-card/70 p-4 sm:grid-cols-[3rem_1fr_auto] sm:items-center">
+                  <p className="font-mono text-sm text-primary">{row.step}</p>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{row.label}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{row.value}</p>
+                  </div>
+                  <span className="w-fit rounded-md border border-border/70 bg-secondary px-2 py-1 font-mono text-xs uppercase text-muted-foreground">
+                    {row.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -202,23 +272,110 @@ export default async function Home() {
       </section>
 
       <footer id="built-with" className="mx-auto flex max-w-[96rem] flex-col gap-4 px-4 py-10 text-sm text-muted-foreground sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <div className="inline-flex w-fit items-center gap-3 rounded-md border border-primary/25 bg-primary/8 px-3 py-2 text-foreground">
-          <span className="flex h-8 w-8 items-end justify-center gap-0.5 rounded-md border border-primary/25 bg-background/70 px-1.5 py-1.5" aria-hidden="true">
-            <span className="h-2 w-1 rounded-full bg-primary/50" />
-            <span className="h-4 w-1 rounded-full bg-primary/70" />
-            <span className="h-6 w-1 rounded-full bg-primary" />
-            <span className="h-3 w-1 rounded-full bg-primary/60" />
-          </span>
-          <span>
-            <span className="block text-xs text-muted-foreground">Built with</span>
-            <span className="font-semibold text-foreground">AssemblyAI</span>
-          </span>
-        </div>
+        <LogoRail compact />
         <Link href="/app" className="font-medium text-primary hover:text-foreground">
           Open app
         </Link>
       </footer>
     </main>
+  );
+}
+
+function LogoRail({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <BrandPill brand="assemblyai" label="AssemblyAI" caption={compact ? "Built with" : "Voice AI"} variant="primary" />
+      <BrandPill brand="vercel" label="Vercel" caption={compact ? "Hosted on" : "Deployment"} />
+      <BrandPill brand="supabase" label="Supabase" caption={compact ? "Secured by" : "Database + auth"} />
+    </div>
+  );
+}
+
+function BrandPill({
+  brand,
+  label,
+  caption,
+  variant = "default",
+}: {
+  brand: "assemblyai" | "vercel" | "supabase";
+  label: string;
+  caption: string;
+  variant?: "default" | "primary";
+}) {
+  return (
+    <div className={`inline-flex min-h-12 items-center gap-3 rounded-md border px-3 py-2 ${
+      variant === "primary"
+        ? "border-primary/30 bg-primary/10 text-foreground"
+        : "border-border/70 bg-card/75 text-foreground"
+    }`}>
+      <BrandMark brand={brand} />
+      <span>
+        <span className="block text-[0.68rem] uppercase leading-none text-muted-foreground">{caption}</span>
+        <span className="mt-1 block text-sm font-semibold leading-none">{label}</span>
+      </span>
+    </div>
+  );
+}
+
+function BrandMark({ brand }: { brand: "assemblyai" | "vercel" | "supabase" }) {
+  if (brand === "vercel") {
+    return (
+      <span className="flex h-8 w-8 items-center justify-center rounded-md border border-current/20 bg-background/70" aria-hidden="true">
+        <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+          <path d="M12 4 22 20H2L12 4Z" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (brand === "supabase") {
+    return (
+      <span className="flex h-8 w-8 items-center justify-center rounded-md border border-current/20 bg-background/70" aria-hidden="true">
+        <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+          <path d="M13.4 2.8 5.6 13.1c-.5.7 0 1.7.9 1.7h5.1l-1 6.1c-.2 1 .9 1.6 1.6.8l7.7-10.4c.5-.7 0-1.7-.9-1.7h-5.1l1-6.1c.2-1-.9-1.6-1.5-.7Z" />
+        </svg>
+      </span>
+    );
+  }
+
+  return (
+    <span className="flex h-8 w-8 items-center justify-center rounded-md border border-current/20 bg-background/70" aria-hidden="true">
+      <span className="flex items-end justify-center gap-0.5">
+        <span className="h-2 w-1 rounded-full bg-current/45" />
+        <span className="h-4 w-1 rounded-full bg-current/65" />
+        <span className="h-6 w-1 rounded-full bg-current" />
+        <span className="h-3 w-1 rounded-full bg-current/55" />
+      </span>
+    </span>
+  );
+}
+
+function OpsTerminal() {
+  return (
+    <div className="overflow-hidden rounded-md border border-border/70 bg-background/80">
+      <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-4 py-3">
+        <div className="flex items-center gap-1.5" aria-hidden="true">
+          <span className="h-2.5 w-2.5 rounded-full bg-destructive" />
+          <span className="h-2.5 w-2.5 rounded-full bg-primary/60" />
+          <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+        </div>
+        <p className="font-mono text-xs text-muted-foreground">patrol/live-session</p>
+      </div>
+      <div className="space-y-3 p-4">
+        {timeline.map((item) => (
+          <div key={item.time} className="rounded-md border border-border/60 bg-card/72 p-3">
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-mono text-xs text-primary">{item.time}</p>
+              <span className="rounded-md bg-secondary px-2 py-1 font-mono text-[0.68rem] uppercase text-muted-foreground">
+                {item.state}
+              </span>
+            </div>
+            <p className="mt-2 text-xs font-medium uppercase text-muted-foreground">{item.label}</p>
+            <p className="mt-1 text-sm leading-6 text-foreground">{item.value}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
