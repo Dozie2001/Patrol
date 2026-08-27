@@ -1,6 +1,6 @@
 import { demoIncidents } from "@/lib/demo-data";
 import type { Incident, IncidentExtraction } from "@/lib/incident-schema";
-import { incidentSchema } from "@/lib/incident-schema";
+import { incidentSchema, statusSchema } from "@/lib/incident-schema";
 import { createSupabaseServiceClient } from "@/lib/supabase";
 
 export const DEMO_SITE_ID = "00000000-0000-4000-8000-000000000001";
@@ -103,6 +103,42 @@ export async function saveTranscriptTurn({
   if (error) {
     throw new Error(error.message);
   }
+}
+
+export async function updateIncidentStatus({
+  id,
+  status,
+}: {
+  id: string;
+  status: Incident["status"];
+}) {
+  const parsedStatus = statusSchema.parse(status);
+
+  if (id.startsWith("demo-")) {
+    const incident = demoIncidents.find((item) => item.id === id);
+    if (!incident) {
+      throw new Error("Incident not found");
+    }
+
+    return {
+      ...incident,
+      status: parsedStatus,
+    };
+  }
+
+  const supabase = createSupabaseServiceClient();
+  const { data, error } = await supabase
+    .from("incidents")
+    .update({ status: parsedStatus })
+    .eq("id", id)
+    .select("*")
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return mapIncidentRow(data);
 }
 
 function mapIncidentRow(row: IncidentRow) {
